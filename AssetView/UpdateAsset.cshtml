@@ -1,0 +1,33 @@
+@model List<AssetManagementSystem.Models.Asset>;
+@{
+    ViewData["Title"] = "UpdateAsset";
+}
+@using (Html.BeginForm())
+{
+    <b> Search Option: </b>
+    @Html.RadioButton("option", "Name")
+    <text> Name </text>
+    @Html.TextBox("Update")
+    <button type="submit" class="btn btn-primary"> submit </button>
+}
+ <table class="table table-hover">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Year</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>@item.Year</td>
+        </tr>
+        <td>
+
+            <a href="@Url.Action("UpdateAsset",new { item.Id,item.Name,item.Year})"
+            class="btn btn-success">Update</a>
+        </td>
+    }
+
+</table>
