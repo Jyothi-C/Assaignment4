@@ -1,34 +1,59 @@
-@model List< AssetManagementSystem.Models.Asset>;
-@{
-    ViewData["Title"] = "SearchAsset";
-}
-@using (Html.BeginForm("DeleteBook", "AssetManagement", FormMethod.Get))
-{
-    <b> Search Option: </b>
-    @Html.RadioButton("option", "ID")
-    <text> ID </text>
-    @Html.TextBox("search")
-    <button type="submit" class="btn btn-primary"> submit </button>
-}
+@model IEnumerable<AssetManagementSystem.Models.AssetModel>
 
-<table class="table table-hover">
+<p>
+    @Html.ActionLink("Add New", "AddAsset")
+</p>
+<p>
+    @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Post))
+    {
+        <b>Search By:</b>
+        @Html.RadioButton("searchBy", "Name") <text>Name </text>
+        @Html.RadioButton("searchBy", "Year")<text>Year </text> <br />
+        @Html.TextBox("Search") <input type="submit" value="Search" />
+    }
+</p>
+
+<h2>Asset Index</h2>
+
+<table class="table">
     <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Year</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th></th>
     </tr>
-    @foreach (var item in Model)
+    @if (Model.Count() == 0)
     {
         <tr>
-            <td>@item.Id</td>
-            <td>@item.Name</td>
-            <td>@item.Year</td>
+            <td> No matches found </td>
         </tr>
-        <td>
-
-            <a href="@Url.Action("DeleteAsset",new { item.Id,item.Name,item.Year})"
-            class="btn btn-success">Search</a>
-        </td>
     }
-
+    else
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Year)
+                </td>
+                <td>
+                    @Html.ActionLink("Update", "UpdateAsset", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteAsset", new { id=item.Id })
+                </td>
+            </tr>
+        }
+    }
 </table>

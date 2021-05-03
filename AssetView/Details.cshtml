@@ -1,0 +1,37 @@
+@model AssetManagementSystem.Models.AssetModel
+
+<h2>Asset Details</h2>
+
+<div>
+    <h4>Asset</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Year)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "UpdateAsset", new { id = Model.Id }) |
+    <button onclick="window.location.href='https://localhost:5001/AssetManagement/SearchAsset'">BacktoList</button>
+</p>-[';']

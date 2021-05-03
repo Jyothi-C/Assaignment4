@@ -1,15 +1,22 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using AssetManagementSystem.Models;
-//This is the model for the AssetManagement system
+using System.ComponentModel.DataAnnotations;
+
 namespace AssetManagementSystem.Models
 {
-    //properties of three assets
-    public class Asset
+    public enum TypeOfAsset
+    {
+        Book = 1,
+        Software,
+        Hardware
+    };
+    public class AssetModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "This Field is Required")]
+        [Display(Prompt = "Enter Name")]
         public string Name { get; set; }
-        public int Year { get; set; }
+        [Required(ErrorMessage = "This Field is Required")]
+        [Display(Name = "Year of publish")]
+        public string Year { get; set; }
+        public TypeOfAsset AssetType { get; set; }
     }
 }

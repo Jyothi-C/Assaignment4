@@ -1,90 +1,70 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Microsoft.AspNetCore.Mvc;
 using AssetManagementSystem.Models;
-using Microsoft.Extensions.Logging;
-//Controller for the AssetManagement system
+
 namespace AssetManagementSystem.Controllers
 {
-    //The class which is inherited from Controller class is a Controller
     public class AssetManagementController : Controller
     {
-        //created an static object for Asset class
-        static Asset asset = new Asset();
-        //created a list to store asset information
-        static List<Asset> assetList = new List<Asset>();
-
-        //all the action results we will see in this post will also inherit from the ActionResult class.
-        //it contains 3 assets for user choice
-        public IActionResult Index()
+        static List<AssetModel> assetList = new List<AssetModel>();
+        //I have used formmethod.post in searchAssset view to send and save data
+        public ActionResult SearchAsset(string searchBy, string search)
         {
-            return View();
-        }
-        //It contains all three assets operations
-        public IActionResult ListMethodAsset()
-        {
-            //view returns the perticular All assets for user choice
-            return View();
-        }
-        //displays user to enter the data of an asset
-        public IActionResult Asset(Asset objmodel)
-        {
-            if (objmodel != null)
+            if (searchBy == "Name")
             {
-                return View(objmodel);
+                return View(assetList.Where(b => b.Name == search || search == null));
             }
             else
             {
-                return View();
+                return View(assetList.Where(b => b.Year == search || search == null));
             }
         }
-        //AddAsset to add the asset information into lists
-        public IActionResult AddAsset(Asset objmodel)
+        [HttpGet]
+        public ActionResult Details(int id)
         {
-            asset.Id = objmodel.Id;
-            asset.Name = objmodel.Name;
-            asset.Year = objmodel.Year;
-            assetList.Add(asset);
-            //it displays the list of added assets information
-            return View(assetList);
+            var asset = assetList.FirstOrDefault(b => b.Id == id);
+            return View(asset);
         }
-        //SearchAssets searches the Asset by id which is given by user
-        public IActionResult SearchAsset(int id)
+        [HttpGet]
+        public ActionResult AddAsset()
         {
-            if (assetList.Exists(x => x.Id == id))
-            {
-                assetList.BinarySearch(asset);
-            }
-            //if the id exists it shows the asset information
-            return View(assetList);
-        }
-        //It deletes the perticular asset data using id
-        public IActionResult DeleteAsset(int id)
-        {
-            if (assetList.Exists(x => x.Id == id))
-            {
-                assetList.Remove(asset);
-            }
-            //After deleting it view the list
-            return View(assetList);
-        }
-        // it updates the asset by the given new name into the available name
-        public IActionResult UpdateAsset(string name, string newName)
-        {
-            {
-                if (assetList.Exists(x => x.Name == name))
-                {
-                    newName = asset.Name;
-                    //Asset newAssetName = asset.Where(x => x.Name == newName);
-                   // return View(newAssetName);
-                     return View(assetList);
-
-                }
-            }
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddAsset(AssetModel assetCreate)
+        {
+            assetCreate.Id = assetList.Count + 1;
+            assetList.Add(assetCreate);
+            return View(assetCreate);
+        }
+        [HttpGet]
+        public ActionResult UpdateAsset(int id)
+        {
+            var asset = assetList.FirstOrDefault(b => b.Id == id);
+            return View(asset);
+        }
+        [HttpPost]
+        public ActionResult UpdateAsset(AssetModel assetEdit)
+        {
+            var asset = assetList.FirstOrDefault(b => b.Id == assetEdit.Id);
+            assetList.Remove(asset);
+            assetList.Add(assetEdit);
+            return View(assetEdit);
+        }
+        [HttpGet]
+        public ActionResult DeleteAsset(int id)
+        {
+            var asset = assetList.FirstOrDefault(b => b.Id == id);
+            return View(asset);
+        }
+        [HttpPost]
+        public ActionResult DeleteAsset(AssetModel assetDelete)
+        {
+            var asset = assetList.FirstOrDefault(b => b.Id == assetDelete.Id);
+            assetList.Remove(asset);
+            return View(assetDelete);
         }
     }
 }
