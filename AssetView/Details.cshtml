@@ -32,6 +32,9 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "UpdateAsset", new { id = Model.Id }) |
-    <button onclick="window.location.href='https://localhost:5001/AssetManagement/SearchAsset'">BacktoList</button>
-</p>-[';']
+    @Html.ActionLink("Edit", "UpdateAsset", new { id = Model.Id })
+    @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Post))
+    {
+    <input type="submit" value="BackToList" class="btn btn-success" />
+    }
+</p>

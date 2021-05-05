@@ -7,9 +7,7 @@
     @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Post))
     {
         <b>Search By:</b>
-        @Html.RadioButton("searchBy", "Name") <text>Name </text>
-        @Html.RadioButton("searchBy", "Year")<text>Year </text> <br />
-        @Html.TextBox("Search") <input type="submit" value="Search" />
+        @Html.TextBox("Search") <input type="submit" value="Search" class="btn btn-success" />
     }
 </p>
 
@@ -40,17 +38,15 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Id)
+                    @Html.ActionLink(item.Id.ToString(),"Details", new { id = item.Id })
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.ActionLink(item.Name,"Details", new { id = item.Id })
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Year)
                 </td>
                 <td>
-                    @Html.ActionLink("Update", "UpdateAsset", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
                     @Html.ActionLink("Delete", "DeleteAsset", new { id=item.Id })
                 </td>
             </tr>

@@ -38,4 +38,9 @@
         </div>
     </div>
 }
-<button onclick="window.location.href='https://localhost:5001/AssetManagement/SearchAsset'">BacktoList</button>
+<p>
+    @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Post))
+    {
+        <input type="submit" value="BackToList" class="btn btn-success" />
+    }
+</p>
