@@ -4,7 +4,7 @@
     @Html.ActionLink("Add New", "AddAsset")
 </p>
 <p>
-    @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Post))
+    @using (Html.BeginForm("SearchAsset", "AssetManagement", FormMethod.Get))
     {
         <b>Search By:</b>
         @Html.TextBox("Search") <input type="submit" value="Search" class="btn btn-success" />

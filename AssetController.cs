@@ -11,7 +11,11 @@ namespace AssetManagementSystem.Controllers
         //I have used formmethod.post in searchAssset view to send and save data
         public ActionResult SearchAsset(string search)
         {
-            return View(assetList.Where(b => b.Name.Equals(search) || b.Year.Equals(search) || Convert.ToString(b.Id).Equals(search) || search == null));
+            if (string.IsNullOrEmpty(search))
+            {
+                return View(assetList);
+            }
+            return View(assetList.Where(b => b.Name.Contains(search) || b.Year.Contains(search) || Convert.ToString(b.Id).Equals(search) || search == null));
         }
         [HttpGet]
         public ActionResult Details(int id)
@@ -29,6 +33,8 @@ namespace AssetManagementSystem.Controllers
         {
             assetCreate.Id = assetList.Count + 1;
             assetList.Add(assetCreate);
+            string message = "Added the Asset successfully";
+            ViewBag.Message = message;
             return View(assetCreate);
         }
         [HttpGet]
@@ -43,6 +49,8 @@ namespace AssetManagementSystem.Controllers
             var asset = assetList.FirstOrDefault(b => b.Id == assetEdit.Id);
             assetList.Remove(asset);
             assetList.Add(assetEdit);
+            string message = "Updated the Asset successfully";
+            ViewBag.Message = message;
             return View(assetEdit);
         }
         [HttpGet]
