@@ -15,7 +15,7 @@ namespace AssetManagementSystem.Controllers
             {
                 return View(assetList);
             }
-            return View(assetList.Where(b => b.Name.Contains(search) || b.Year.Contains(search) || Convert.ToString(b.Id).Equals(search) || search == null));
+            return View(assetList.Where(b => b.Name.Contains(search) || b.Year.Contains(search) || Convert.ToString(b.Id).Equals(search)));
         }
         [HttpGet]
         public ActionResult Details(int id)
