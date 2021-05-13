@@ -8,7 +8,7 @@ namespace AssetManagementSystem.Controllers
     public class AssetManagementController : Controller
     {
         static List<AssetModel> assetList = new List<AssetModel>();
-        //I have used formmethod.post in searchAssset view to send and save data
+        [HttpGet]
         public ActionResult SearchAsset(string search)
         {
             if (string.IsNullOrEmpty(search))
@@ -47,8 +47,8 @@ namespace AssetManagementSystem.Controllers
         public ActionResult UpdateAsset(AssetModel assetEdit)
         {
             var asset = assetList.FirstOrDefault(b => b.Id == assetEdit.Id);
-            assetList.Remove(asset);
-            assetList.Add(assetEdit);
+            int index = assetList.IndexOf(asset);
+            assetList[index] = assetEdit;
             string message = "Updated the Asset successfully";
             ViewBag.Message = message;
             return View(assetEdit);
